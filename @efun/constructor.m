@@ -196,7 +196,7 @@ elseif isa(op, 'double') %deal with vectors of samples:
                            end
                        end  
                        locst = (dom(2)-dom(1))*(0:N-1)/N + dom(1); 
-                       if abs(norm(plocs(:)-locst(:))) > 1e-15
+                       if abs(norm(plocs(:)-locst(:))) > 5*1e-15
                            error(['efun:constructor: sample locations on domain [a, b] ',...
                            'should be of the form x_j = (j-1)*(b-a)/N + a for a length N sample. ',...
                            'If this is not possible,try using rfun instead.'])

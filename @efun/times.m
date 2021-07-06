@@ -38,7 +38,10 @@ else  %rfuns and efuns
         error('efun:times: "times" for efuns in signal space not yet available.')
     end
 %% do compression times: 
-
+% check domains: 
+if ~all(s.domain == g.domain)
+    error('efun:times: domain of definition for each must be the same')
+end
 % part 1: guess the upper bound on length of h: 
 m1 = length(s).*length(g); 
 
@@ -54,34 +57,38 @@ G = G(:);
 out = union(idxw, idxe); 
 
 %set the upper bound: 
-m = m1 - length(out); 
+D = max([s.res, g.res]); 
+m = min(m1 - length(out), (D+mod(D,2))/2); 
 
 %use compression algorithm to construct h = s.*g:       
     tol = 1e-10; 
-    happy = false; 
-    D = max([s.res, g.res]); 
+    happy = false;   
     M = min(2*m+20, D); 
-    coeffs = feval(s,0:M).*feval(g,0:M); 
+    coeffs = feval(s,(0:M)').*feval(g,(0:M)'); 
+    h = s; 
     while ~happy
         h.const = coeffs(1); 
+        coeffs(1) = 0; 
         h.scl = max(abs(coeffs)); 
-        coeffs = (coeffs-coeffs(1))/scl;
-        [r,ss,w] = prony_compress(coeffs, MM, tol); 
+        coeffs = coeffs/h.scl;
+        [r,ss,w] = prony_compress(coeffs, m, tol); 
         h.exp = r; 
         h.weights = w;
         rnd = randi([0 D], 1,50).'; 
-        err = abs(feval(h,[(0:M).';rnd])-([h.scl*coeffs+h.const;feval(s,rnd)]).*...
-        [h.scl*coeffs+h.const;feval(g,rnd)]); 
+        coeffs(1) = h.const; 
+        coeffs(2:end) = h.scl*coeffs(2:end); 
+        err = abs(feval(h,[(0:M).';rnd])-[coeffs; feval(s,rnd).*feval(g, rnd)]);
         if max(err) < tol 
             happy = true;
+            break;
         end
         if M > 2*D
             break; 
         end
-        coeffs = [coeffs; feval(s, M+1:2*M).*feval(g, M+1:2*M)];
+        coeffs = [coeffs; feval(s, (M+1:2*M).').*feval(g, (M+1:2*M).')];
         M = 2*M; %double sample # and try again
     end
-    h.svs = ss;
+    h.sv = ss;
     h.res = D; 
 end
 

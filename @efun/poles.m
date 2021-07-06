@@ -27,7 +27,7 @@ else
     p = rp + imag(p)*1i;  
     if ~isempty(varargin) && strcmpi(varargin{:}, 'zt')
         p = exp(-2*pi*1i*p); 
-        p = p(abs(p)<1); %only return poles inside disk.
+        %p = p(abs(p)<1); %only return poles inside disk.
     end
 end
 

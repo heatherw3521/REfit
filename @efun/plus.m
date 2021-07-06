@@ -36,6 +36,9 @@ else  %rfuns and efuns
         error('efun:plus:"+" for efuns in signal space not yet available.')
     end
     h = s; 
+    if ~(s.domain == g.domain) %check that domains match
+    error('efun:times: domain of definition for each must be the same')
+    end
     %check for simple case where g is double s. 
     if length(g) == length(s)
         if  all(abs( sort(abs(s.exp))-sort(abs(g.exp))) < 1e-15) &&...
@@ -54,9 +57,9 @@ else  %rfuns and efuns
 
     % add two efuns with compression algorithm        
     tol = 1e-10; 
-    happy = false; 
-    MM = (length(s.exp)+ length(g.exp));
+    happy = false;
     D = max([s.res, g.res]); 
+    MM = min( (length(s.exp)+ length(g.exp)), (D + mod(D,2))/2);
     M = min(2*MM+20, D); 
     coeffs = feval(s,(0:M).') + feval(g,(0:M).'); 
     scl = max(abs(coeffs)); 

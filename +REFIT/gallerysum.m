@@ -43,7 +43,7 @@ switch lower(name)
         f1 = @(x) 3/4*abs(x).^3 - 3/2*(x).^2 + 1; 
         f2 = @(x) 1/4*(2 - abs(x)).^3; 
         f3 = @(x) f1(x).*(abs(x) <= 1) + f2(x).*(abs(x) > 1 & abs(x) <= 2); 
-        fa = @(x) f3(6*x-3)-.25; 
+        fa = @(x) f3(6*x-3); 
         n = 500; x = linspace(0, 1, 2*n+2); x = x(1:end-1).'; 
         f = efun(fa(x), 'tol', 1e-11); 
         

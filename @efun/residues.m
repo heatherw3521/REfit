@@ -1,5 +1,5 @@
 function out = residues(s, varargin)
-% residues(s) returns the residues of the poles of r(x) = ift(s). 
+% residues(s) returns the residues of the poles of ift(s). 
 %
 % residues(s, 'zt') returns the residues of the poles of r(z), 
 % where r(z) = r(x) on the unit circle and z = exp(2*pi*1i*x). 

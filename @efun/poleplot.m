@@ -17,14 +17,14 @@ if ~isempty(varargin) && any(strcmp(varargin{:}, 'zt'))
     x = linspace(0, 2*pi, 1000); 
     plot(exp(1i*x), '-k', 'linewidth', 1.5)
     pol = poles(s, 'zt'); pol = pol(abs(pol)< 1); 
-    w = s.weights; 
+    %w = s.weights; 
     plot(exp(linspace(0, 1,100)*2*pi*1i),'k', 'linewidth', 1.5)
     hold on
     plot(real(pol), imag(pol), '.', 'markersize', ms)
     axis equal
 else %do the trig plot. 
     x = linspace(dom(1),dom(2),res);
-    [H, ~, ~] = ift(s, 'polres'); 
+    H = ift(s, 'polres'); 
     pol = poles(s, 'trig'); 
     plot(x, H(x), 'linewidth', 2, 'color','k')
     hold on

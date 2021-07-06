@@ -44,7 +44,7 @@ end
 if (strcmpi(type, 'polres')  || strcmpi(type,'zt') )
     dom = s.domain;
     s.domain = [0, 1]; %shift to get correct poles:
-    pol = poles(s, 'zt');
+    pol = poles(s, 'zt'); pol = pol(abs(pol)<1); 
     pol = [pol ; 1./conj(pol)];
     w = s.weights; 
     const = s.const; 
