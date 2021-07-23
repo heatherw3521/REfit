@@ -12,7 +12,6 @@ m= length(xp);
 
 % Remove any infinite or NaN function values (avoid SVD failures):
 toKeep = ~isinf(F);
-
 %remove points xp from sample
 F = F(toKeep); Z = Z(toKeep);
 toKeep = ~isnan(F);

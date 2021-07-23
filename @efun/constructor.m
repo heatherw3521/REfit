@@ -4,7 +4,7 @@ function F = constructor(f, op, varargin)
 % the main constructor for exponential sums (efuns). 
 %% 
 F = f;
-[F.space, F.domain, tol, type, samples, locs, deg]...
+[F.space, F.domain, tol, type, samples, locs, deg, pronytype]...
     = parse_input(op, varargin{:}); 
 
 %set some default options: 
@@ -49,7 +49,7 @@ switch type
         samples(1) = 0; 
         scl = max(abs(samples)); 
         samples = samples/scl; 
-        [w,r, L, ss]= coeffs2efun(samples, locs, chop_on, tol);
+        [w,r, L, ss]= coeffs2efun(samples, locs, chop_on, tol,pronytype);
         res = L;
 %% case 5: construct efun in time domain from samples
     case 'vals'
@@ -75,13 +75,14 @@ end
 %%%%%%%%%%%%%%%% END MAIN PROGRAM %%%%%%%%%%%%%%%%%%%
 %% PARSE INPUT FUNCTION/GETS SAMPLES FOR CONSTRUCTION OF EFUN
 
-function [space, dom, tol, type, samples, locs, deg] = parse_input(op, varargin)
+function [space, dom, tol, type, samples, locs, deg, pronytype] = parse_input(op, varargin)
 
 % set defaults
 space = 'Fourier';
 dom = [0, 1]; 
 tol = 1e-10; 
 deg = []; 
+pronytype = []; 
 
 %check for time or values flag:
 if any(strcmpi(varargin, 'time')) || any(strcmpi(varargin, 'values')) ||...
@@ -115,6 +116,10 @@ end
 [~, degid] = find(strcmp(varargin,'length'));
 if ~isempty(degid)
     deg = varargin{degid+1}; 
+end
+[~, pid] = find(strcmp(varargin,'pronytype')); 
+if ~isempty(degid)
+    pronytype = varargin{pid+1}; 
 end
 
 %% parse types

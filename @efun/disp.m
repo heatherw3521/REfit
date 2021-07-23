@@ -12,7 +12,7 @@ end
 
 % Get information that we want to display:
 dom = F.domain;                           % Domain
-len = length(F);                          % Numerical rank
+len = length(F);                          % # of terms in sum
 spc = F.space; 
 
 

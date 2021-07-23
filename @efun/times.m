@@ -7,7 +7,7 @@ function h = times(s,g)
 %
 % times(s, g) is called when the syntax 's.*g' is used. 
 %
-% See also: rfun\convolve.
+% See also: rfun/convolve.
 
 tol = 1e-10; 
 

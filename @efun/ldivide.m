@@ -1,12 +1,12 @@
-function out = ldivide(s, g)
+function out = ldivide(s, a)
 % s.\a = division of s by a, where a is a scalar. 
 %
 % 
 %%
 if isempty(s)
     out = []; 
-elseif isa(g, double) && isa(s, efun)
-    if g ==0 
+elseif isa(a, double) && isa(s, efun)
+    if a ==0 
         out = inf; 
     else 
     out = times(s, 1/a); 

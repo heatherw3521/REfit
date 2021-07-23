@@ -18,7 +18,8 @@ end
 
 if length(varargin) == 1
     %integral over domain
-       out = s.const; 
+       sdom = s.domain; 
+       out = (sdom(2)-sdom(1))*s.const; 
 else %integral over a fixed interval
     dom = varargin{1}; 
     sdom = s.domain; 

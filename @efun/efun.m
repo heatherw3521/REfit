@@ -3,8 +3,8 @@ classdef efun
 %
 % EFUN class for representing sums of weigthed decaying complex exponentials. 
 %
-% These sums can be used to approximate the Fourier series of f (default)
-% or f directly (include flag 'values').
+% These sums are used to approximate the Fourier series of f (default),
+% (eventually we will also include the option to represent f directly.)
 % 
 % INPUT: 
 % f is a vector of values [x_0, x_1, ...x_{2N}], where x_j = j/2N+1.
@@ -30,7 +30,7 @@ classdef efun
         function s = efun(varargin)
             % The main constructor
             
-            % Return an empty EXPFUN:
+            % Return an empty EFUN:
             if ( (nargin == 0) || isempty(varargin{1}) )
                 s.domain = [];
                 return

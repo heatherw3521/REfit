@@ -1,5 +1,5 @@
 
-function [w,r, res, ss]= coeffs2efun(cp, x, chop_on, tol)
+function [w,r, res, ss]= coeffs2efun(cp, x, chop_on, tol, pronytype)
 %%
 %  cp is a vector of Fourier coefficients, x are the modes (modes are geq 0). 
 %  Returns mx1 vectors of weights (w) and nodes (r), 
@@ -48,7 +48,7 @@ if ( length(cp)==1 )
         ss = [];
         return
 end
-[z,ss] = coneigen(cp,tol); 
+[z,ss] = coneigen(cp,tol, pronytype); 
 end
 
 %roots of Prony polynomial are exponents for our sum. 

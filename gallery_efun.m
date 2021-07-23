@@ -1,4 +1,4 @@
-function varargout = gallerysum(name)
+function varargout = gallery_efun(name)
 % Gallery function for efuns
 % 
 % 'abs': abs(x)
@@ -31,13 +31,13 @@ switch lower(name)
 
     case 'wild' %wild from Trefethen
         fa = @(x) wild(x); 
-        n = 6000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
-        f = efun(fa(x), 'tol', 1e-11); 
+        n = 4000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
+        f = efun(fa(x), 'tol', 1e-7); 
     
     case 'wilder' %wild from Trefethen with added singularities
         fa = @(x) wilder(x); 
-        n = 8000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
-        f = efun(fa(x), 'tol', 1e-11); 
+        n = 6000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
+        f = efun(fa(x), 'tol', 1e-5); 
         
     case 'spline' %cubic spline
         f1 = @(x) 3/4*abs(x).^3 - 3/2*(x).^2 + 1; 

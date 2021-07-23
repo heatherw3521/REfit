@@ -2,8 +2,9 @@ function varargout = cumsum(s, varargin)
 % indefinite integration of an efun. 
 %
 % cumsum(s,c) returns a function handle for computing 
-% the Fourier coefficients of the function F(x) = integral( ift(s)-mean(ift(s))
-% over [c, x] \subset [a b], where ift = inverse Fourier transform, and [a, b] 
+% the Fourier coefficients of the function 
+% F(x) = integral( ift(s)-mean(ift(s)) over [c, x] \subset [a b], 
+% where ift = inverse Fourier transform, and [a, b] 
 % is the domain of ift(s). By default, c = a. 
 % 
 % cumsum(s, 'type') returns F(x) as an object based on the input 'type'. 
@@ -63,7 +64,7 @@ elseif strcmpi(type, 'chebfun')
 end
  
 
-if length(varargout) > 1
+if nargout > 1
     varargout = {S, h};
 else
     varargout = {S}; 
@@ -74,8 +75,10 @@ end
 
 function vals = eval_coeff(s, j)
 %s is efun, j = coeffs to eval
+dom = s.domain; 
+L = dom(2)-dom(1); 
 j = j(:);  
-vals =  feval(s, j)./(2*pi*1i*j); 
+vals =  L*feval(s, j)./(2*pi*1i*j); 
 vals((j==0)) = 0; %fix where j = 0; 
 end
 

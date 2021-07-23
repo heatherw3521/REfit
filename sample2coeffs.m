@@ -1,4 +1,4 @@
-function F = get_coeffs_exp(f, varargin)
+function F = sample2coeffs(f, varargin)
 %gets correct vector of Fourier coeffs to pass to efun constructor.
 %
 % f can be a vector or a function handle or chebfun. 

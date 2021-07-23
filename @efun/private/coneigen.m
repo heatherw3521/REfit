@@ -1,13 +1,13 @@
-function [z, ss] = coneigen(cp,tol)
+function [z, ss] = coneigen(cp,tol, svd_type)
 %
 % finds z, the roots of the Prony polynomial associated
 % with the vector cp using a variation of Prony's method. 
 %
 % see Beylkin,G.,  Monzon, L. (2009)
 % 
-
-svd_type = 'randomized'; 
-%TO DO: pick a trade-off size. Small H should be standard SVD. 
+if isempty(svd_type)
+    svd_type = 'randomized'; 
+end
 
 %%
 % build a square Hankel matrix from these coeffs 

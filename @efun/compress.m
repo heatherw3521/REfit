@@ -12,7 +12,7 @@ function s = compress(S, varargin)
 %%empty case:
 if isempty(S) 
     %pass to constructor 
-    s = efun(varargin{:}); 
+    s = efun(); 
     return
 end
 

@@ -1,9 +1,8 @@
-function varargout = subsref(s, index)
-%subsref for efuns. 
+function varargout = subsref(r, index)
+%subsref for rfuns. 
 %( )
-%s(x), where x is a vector, returns the 
-% vector of associated values of s at x. 
-
+%r(x), where x is a vector, returns the 
+% vector of associated values of r at x. 
 
 idx = index(1).subs;
 switch index(1).type
@@ -14,18 +13,14 @@ case '()' %eval
    [a, b] = size(x); 
     %flatten for eval: 
     x = x(:);    
-    out = feval(s, x, idx{2:end});
+    out = feval(r, x);
     if ~(a==1) && ~(b ==1) %matrix needs reshaped
         out = reshape(out, a, b);  
     end
     varargout = { out };
     
  case '.' %get property
-     out = get(s, idx);
+     out = get(r, idx);
      varargout = { out };   
-     
-     
-end
- 
-
+ end
 end
