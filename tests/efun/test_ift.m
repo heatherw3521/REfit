@@ -4,11 +4,15 @@ warning off
 j = 1; 
 tol = 5e-6; 
 
-%the 'wild' function initiates the contigency loops in the ift, which is what
-% we want to test.
-% Note: a strange feature of the randomized Hankel approach + the fact
+% NOTE 1: the 'wild' function is one that efun struggles to resolve. 
+% Using it to test the ift initiates the contigency loops in the ift, 
+% which is what we want to test. (a better way to construct 'wild' is to 
+% use rfun; then the ft if one wants an efun). 
+%
+% NOTE 2: a strange feature of the randomized Hankel approach + the fact
 % that exponential sums are "sloppy models" is that
 % the nodes/weights are not the same each time efun is called. 
+% (maybe we should fix this by seeding ?). 
 
 [s, fa] = gallery_efun('wild'); 
 x = linspace(0, 1, 3000).'; 

@@ -3,7 +3,6 @@ function vals = feval(r, zz)
 %
 % See also: rfun/sample, rfun/coeffs.
 
-
 [s1, s2] = size(zz); 
 zz = zz(:);
 dom = r.domain; 

@@ -41,7 +41,7 @@ else
     
     % call compression + in efun 
     % (this avoids using the rfun constructor directly and 
-    % running into issues with sampling grids that don't account
+    % alleviates some issues with sampling grids that don't account
     % for singularity locations):
     rf = ft(r); 
     if isa(g, 'rfun') 

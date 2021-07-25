@@ -6,10 +6,14 @@ function varargout = gallery_rfun(name)
 % 'rand': quasi-random selection of clusters of poles.
 %
 % 'wells': an analytic function consisting of several well-like regions.
+%
+% 'wild': wild function from Trefethen (cite). 
+%
+% 'wilder': wild with some added singularities. 
 %%
 
 if ( nargin == 0 )
-    names = {'abs', 'rand', 'wells'};
+    names = {'abs', 'rand', 'wells', 'wild', 'wilder'};
     name = names{randi(length(names))};
 end
 
@@ -29,6 +33,16 @@ switch lower(name)
         fa = @(x) wells(x); 
         n = 3000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
         f = rfun(fa(x), x, 'tol', 1e-8); 
+        
+    case 'wild' 
+        fa = @(x) wild(x); 
+        n = 3000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
+        f = rfun(fa(x), x, 'tol', 1e-9); 
+        
+    case 'wilder' 
+        fa = @(x) wilder(x); 
+        n = 4000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
+        f = rfun(fa(x), x, 'tol', 1e-6); 
     %  error if the input is unknown.
     otherwise
         error('EFUN:GALLERY:unknown:unknownFunction', ...

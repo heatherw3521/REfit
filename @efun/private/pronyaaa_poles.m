@@ -53,7 +53,7 @@ VV = [VV; fj.'];
 [Q, ~]= qr(VV'); 
 Q = Q(:,lp:end); 
 
-Sf = diag(fj);                  % Right scaling matrix.
+Sf = diag(fj);                 
 A = (SF*C - C*Sf);               
 [~, ~, V] = svd(A*Q, 0);        
 wj = V(:,end);      % weight vector

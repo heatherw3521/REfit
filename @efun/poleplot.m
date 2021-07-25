@@ -25,7 +25,7 @@ if ~isempty(varargin) && any(strcmp(varargin{:}, 'zt'))
 else %do the trig plot. 
     x = linspace(dom(1),dom(2),res);
     H = ift(s, 'polres'); 
-    pol = poles(s, 'trig'); 
+    pol = poles(s); 
     plot(x, H(x), 'linewidth', 2, 'color','k')
     hold on
     plot(real(pol), imag(pol), '.b', 'markersize', ms)

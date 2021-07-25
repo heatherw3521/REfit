@@ -10,9 +10,13 @@ function s = ft(r, varargin)
 %%
 % check for tol parameter: 
 tol = 1e-10;
+res = []; 
 if ~isempty(varargin)
-    tolid = find(strcmpi(varargin, 'tol'));
-    tol = varargin{tolid+1};
+    if nargin==3 %(r, 'tol', tol)
+        tol = varargin{end}; 
+    else %(r, sample_length)
+        res = varargin{1}; 
+    end       
 end
 
 poles = r.poles;  
@@ -23,7 +27,9 @@ a = dom(1); b = dom(2);
 % We average the conjugate pairs of poles since conjugate symmetry is not 
 % enforced by rfun:
 
-p = exp(-2i*pi/(b-a)*poles); 
+%move poles to [0, 1) domain:
+poles = (poles-a)/(b-a);
+p = exp(-2i*pi*poles); 
 p1 = p(abs(p)<1); 
 p2 = p(abs(p)>1); 
 p1 = sort(p1, 'ComparisonMethod', 'real');
@@ -32,22 +38,23 @@ p2 = sort(p2, 'ComparisonMethod', 'real');
 
 % average the poles: 
 p = (p1 + p2)/2;
-%poles = log(p)/(-2i*pi/(b-a)); 
-%p = exp(-2i*pi/(b-a)*poles); 
-s = efun(); 
-s.nodes = log(p);
+
 %%
 % get a sample in Fourier space to solve for weights:
-res = r.res;
-res = res + (1-mod(res, 2));
+if isempty(res)
+    res = r.res;
+end
+const = r.const; %normalize sample
+scl = r.scl; 
+r.const = 0; 
+r.scl = 1; 
 happy = false; 
 while ~happy
-    x = linspace(a, b, res+2); 
+    x = linspace(a, b, res+1); 
     x = x(1:end-1);
-    y = get_coeffs_exp(feval(r,x), 'pos'); %does an fft
+    y = sample2coeffs(feval(r,x), 'pos'); %does an fft
     %check for resolution: (check decay on coeffs):
-        %y = y((resolve+1):end);
-    cutoff = standardChop(y, tol);
+    cutoff = standardChop(y, min(1e-10,tol));
     happy = cutoff < length(y); 
     res = 2*res; 
 end
@@ -71,7 +78,7 @@ while ~happy
     %check for small weights: 
     if ~isempty(find(abs(w)<= tol, 1))
         p = p((abs(w)> tol)); 
-        s.nodes = log(p);  
+        %s.nodes = log(p);  
         n = length(p); 
         %need to recompute the weights 
         V = repmat((p.'), mm,1); 
@@ -85,7 +92,7 @@ while ~happy
         nn = length(xx); 
         V = repmat((p.'), nn,1); 
         V = V.^(repmat(xx, 1,length(p)));  
-        happy = norm(V*w-yy(xx+1)) < 1e1*tol;
+        happy = norm(V*w-yy(xx+1)) < tol;
     else
         happy =true; 
     end
@@ -93,14 +100,18 @@ end
 
 %%
 % construct efun
-scl = norm(w);
-w = w/scl; 
+ 
+s = efun(); 
+s.exp = log(p);
 s.weights = w; 
 s.domain = r.domain; 
 s.space = 'Fourier'; 
-s.domain = [-(cutoff-1) cutoff+1]; 
-s.const = r.const; 
+s.domain = r.domain; 
+s.const = const; 
 s.scl = scl;
+res = res/2; 
+
+s.res = ((res+mod(res,2))/2); 
 
 end
 
