@@ -3,9 +3,12 @@ function s = ft(r, varargin)
 % This returns an efun object (sum of complex exponentials)
 % representing the Fourier transform of the trigonometric rational r.
 %
-% For details, see: 
-%
+%%
 % See also: efun/efun, efun/ift
+%
+% For more information, see Wilber, H., Damle, A., and Townsend, A. (2021). 
+
+
 
 %%
 % check for tol parameter: 

@@ -1,47 +1,69 @@
-function varargout = cumsum(s, varargin)
-% indefinite integration of an efun. 
+function varargout = cumsum(r, varargin)
+% indefinite integration of an rfun. 
 %
-% cumsum(s,c) returns a function handle for computing 
-% the integral of r over [c, x] \subset [a b], where [a, b] 
-% is the domain of ift(s). By default, c = a. 
+% cumsum(r) returns a function handle for computing 
+% the integral of r over [r.domain(1), x].  
 % 
-% cumsum(s, 'type') returns F(x) as an object based on the input 'type'. 
-% One can choose 'type' = 'rfun', 'efun' (returns ift(cumsum(r)), or 'chebfun'.  
+% cumsum(r, 'type') returns F(x) as an object based on the input 'type'. 
+% One can choose 'type' = 'rfun', 'efun', or 'chebfun'.  For efun and rfun
+% types, F(x) must be periodic, so it is assumed that mean(r)=0. 
 %
 % See also, rfun\sum, rfun\integral
 
 %%
-% for now, we only consider efuns representing Fourier series
-if strcmp(s.space, 'time')
-    error('efun:diff: differentiation for efuns in signal space not available.')
+if isempty(r)
+    varargout{1} = []; 
+    if nargout > 1
+        varargout{2} = []; 
+    end
+    return
 end
+
+a = r.domain(1); 
+
+type = 'handle';
+if ~isempty(varargin)
+    type = varargin{1}; 
+end
+%for now, call efun. Later we will add option to do GL quadrature.
+
+%handle the constant term: 
+const = r.const; 
+r.const = 0; 
+s = cumsum(ft(r), 'efun'); 
+d = r.res; 
+h = @(x) eval_cumsum(s, x, const, a);
+if strcmpi(type, 'handle') %wants function handle
+    varargout = {h};
+    return
+elseif strcmpi(type, 'rfun')
+    if abs(const) >1e-12 %not a mean zero function
+        warning('rfun:cumsum: setting mean to zero.')
+    end
+    S = ift(s);
+elseif strcmpi(type, 'efun')
+    if abs(const) >1e-12 %not a mean zero function
+        warning('rfun:cumsum: setting mean to zero.')
+    end
+    S = s; 
+elseif strcmpi(type, 'chebfun')
+    S = chebfun(h, r.domain, 'tol', r.tol); 
+end
+ 
+if nargout > 1
+    varargout = {S, h};
+else
+    varargout = {S}; 
+end
+
 
 %%
-[a, ~] = r.domain; 
-
-%parse input
-if isempty(varargin)
-    type = 'handle';
-    c = a;
-elseif length(varargin)==1
-    if isa(varargin{1}, 'string')
-        type = varargin{1};
-        c = a; 
-    else
-        c = varargin{1};
-        type = 'handle';
-    end
-elseif isa(varargin{1}, 'string')
-    type = varargin{1}; 
-    c = varargin{2}; 
-else
-    type = varargin{2}; 
-    c = varargin{1}; 
-end
-
-% what is the best way to do this? (1) get an efun and use ft/nufft to
-% evaluate? (2) GL quadrature?
 
 end
+
+function val = eval_cumsum(s, x, const,a)
+    val = feval(s,x, 'values') + (x-a)*const;
+end
+
 
 

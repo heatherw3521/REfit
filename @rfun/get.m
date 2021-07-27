@@ -1,7 +1,7 @@
 function val = get( r, propName )
-%GET       GET method for rfuns.
-%   P = GET(r, PROP) returns the property P specified in the string PROP from
-%   Valid entries for the string PROP are:
+% get method for rfuns.
+%   val = get(r, propName) returns the property specified in the string 
+%   propName.Valid entries for the string propName are:
 %    'nodes' = barycentric nodes/interpolating points/support points
 %    'weights' = barycentric weights
 %    'vals' = value of r at the nodes

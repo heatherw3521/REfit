@@ -1,7 +1,7 @@
 function disp(F)
-%DISP   Display an RFUN to the command line.
-% 
-% See also DISPLAY.
+% Display an rfun to the command line.
+%%
+% See also rfun/display.
 
 % deal with empty case.  
 if ( isempty(F) )

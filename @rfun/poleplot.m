@@ -3,7 +3,7 @@ function poleplot(r, varargin)
 % of r at a sample x (plotted in the x-y plane) over the plot. 
 %
 % poleplot(r, 'zt') plots the subset of poles of modulus < 1 of the 
-% function r(z), where z = exp(2 * pi *1i *x). 
+% function r(z), where z = exp(2 * pi *1i *(x-r.domain(1))/diff(r.domain)). 
 %
 % See also: rfun/poles, rfun/plot. 
 

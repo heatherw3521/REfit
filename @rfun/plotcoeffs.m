@@ -6,7 +6,7 @@ function plotcoeffs(r, varargin)
 %%
 
 if isempty(r)
-    return %nothing to do. 
+    return 
 end
 
 s = ft(r); 

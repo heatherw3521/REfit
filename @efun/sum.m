@@ -20,7 +20,7 @@ else %integral over a fixed interval
     a = dom(1); 
     b = dom(2); 
     sdom = s.domain; 
-    if a < sdom(1) || dom(2) > b
+    if a < sdom(1) || sdom(2) < b
         error('efun:sum:bounds of integral must be a subset of [%d %d]',sdom(1), sdom(2)); 
     end
     S = cumsum(s, 'efun');

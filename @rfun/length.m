@@ -1,5 +1,5 @@
 function out = length( r )
-% LENGTH OF AN RFUN. If r is a type (m-1, m) rational function, 
+% If r is a type (m-1, m) rational function, 
 % then length(r) = m. 
 %   
 %%

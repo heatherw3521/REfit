@@ -15,8 +15,7 @@ end
 
 %%
 % call appropriate pronyAAA 
-switch type
-    
+switch type  
     case 'function_handle'
         % adaptive sampling + pronyAAA
                     %call pronyAAA: 
@@ -37,12 +36,25 @@ switch type
             const = mean(samples); 
             samples = samples - const; 
             scl = max(samples); 
+            %what to do about zero function:
+            % we assign arbitrary poles/nodes/weights.
+            if abs(scl) <1e-13 && const < 1e-13
+                r.domain = dom;
+                r.poles = [dom(1)+1i;dom(1)-1i];
+                r.weights = [1; 1];
+                r.nodes = [diff(dom)/4; 3*diff(dom)/4];
+                r.vals = [0;0];
+                r.scl = 1; 
+                r.const = 0; 
+                r.tol = tol; 
+                r.res = 2; 
+                return
+            end   
             samples = samples/scl;
             [~, pol, res, zj, fj, wj, ~, N] = pronyaaa(samples, locs, dom, tol, deg, cleanup);
         end
 end
-%% assign properties
-     
+%% assign properties    
 r.poles = pol; 
 r.residues = res; 
 r.nodes = zj; 

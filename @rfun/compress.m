@@ -5,6 +5,7 @@ function R = compress(r, varargin)
 % tolerance can be specified with compress(r, tol). 
 % Default tol = r.tol. 
 %
+%%
 % See also: rfun/ft, efun/compress.
 
 %%

@@ -1,5 +1,5 @@
 function vals = feval(r, zz) 
-% Evaluate an rfun R at the points zz. 
+% Evaluate an rfun r at the points zz. 
 %
 % See also: rfun/sample, rfun/coeffs.
 

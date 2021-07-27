@@ -1,12 +1,14 @@
 function h = times(r,g)
 % Compute the product of r and g.  
-% One of r, g must be an rfun. The other can be a scalar, rfun, efun, 
+% One of r, g must be an rfun. The other can be a scalar, rfun, 
 % or function handle.
+%
+% One can also input r as an rfun and g as an efun. 
+% Then, h =times(r,ift(g)).
 %
 % times(r, g) is called when the syntax 'r.*g' is used. 
 %
 % See also: efun/convolve. 
-
 
 %%
 

@@ -2,7 +2,7 @@ function p = poles(r, varargin)
 % poles(r) returns the poles of r. 
 %
 % poles(r, 'zt') returns the poles of the rational r(z), 
-% where z = exp(2*pi*1i*(x-dom(1))/diff(r.domain)). 
+% where z = exp(2*pi*1i*(x-r.domain(1))/diff(r.domain)). 
 %
 % See also: rfun/roots. 
 
