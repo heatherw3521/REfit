@@ -5,10 +5,10 @@ function s = compress(S, varargin)
 % tolerance can be specified with compress(S, tol). 
 % Default tol = S.tol. 
 %
+%%
 
 % See also: efun/plus, efun/times, rfun/convolve.
 
-%%
 %%empty case:
 if isempty(S) 
     %pass to constructor 

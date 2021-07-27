@@ -34,7 +34,6 @@ rp = real(r.poles);
 pass(j) = all( rp >= 4 & rp <= 5); 
 j = j+1;
 
-
 % now test when constructed via inverse Fourier transform: 
 r2 = ift(s); 
 pass(j) = (length(r2.poles)==2*length(s));

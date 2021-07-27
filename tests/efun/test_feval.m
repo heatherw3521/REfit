@@ -33,10 +33,4 @@ pass(j) = max(abs(s(x, 'values')-fa2(x))) < tol; %j = 5
 j = j+1; 
 pass(j) = max(abs(s(x.', 'values')-fa2(x))) < tol; %j = 6
 
-
-%% exponential sum in value space:  
-%s = efun(fa, 'time'); 
-
-
-
 end

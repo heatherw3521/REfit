@@ -1,9 +1,11 @@
 function p = poles(s, varargin)
-% poles(s) returns the poles of the trigonometric rational r(x) = ift(s). 
+% poles(s) returns the poles of the trigonometric rational 
+% r(x) = ift(s). 
 %
 % poles(s, 'zt') returns the poles of the rational r(z), where
-% z = exp(2*pi*1i*x/diff(s.domain)). 
+% z = exp(2*pi*1i*(x-s.domain(1))/diff(s.domain)). 
 %
+%%
 % See also: efun/roots. 
 
 if isempty(s)

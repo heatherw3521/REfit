@@ -2,6 +2,8 @@
 function F = constructor(f, op, varargin) 
 %
 % the main constructor for exponential sums (efuns). 
+%
+% see efun/efun.m for details.
 %% 
 F = f;
 [F.space, F.domain, tol, type, samples, locs, deg, pronytype]...
@@ -30,17 +32,15 @@ switch type
         return
 %% case 2: efun
     case 'efun'
-        if ~(deg == length(op))
-            F = compress(op, deg); 
-        elseif tol > op.tol
-            F = compress(op, 'tol', tol); 
+        if tol > op.tol
+            F = compress(op, tol); 
         else
             F = op; 
         end
         return
 %% case 3: rfun input    
     case 'rfun'
-        F = ft(op, 'tol', tol, deg); %call Fourier transform
+        F = ft(op, 'tol', tol); %call Fourier transform
         return
 %% case 4:construct efun in Fourier space from coeffs
     case 'coeffs'
@@ -48,6 +48,16 @@ switch type
         const = samples(1); 
         samples(1) = 0; 
         scl = max(abs(samples)); 
+        if scl ==0; %efun to represent 0
+            F.weights = 0; 
+            F.exp = .5; 
+            F.const = 0; 
+            F.scl = 1; 
+            F.res = 1; 
+            F.sv = []; 
+            F.tol = tol; 
+            return
+        end
         samples = samples/scl; 
         [w,r, L, ss]= coeffs2efun(samples, locs, chop_on, tol,pronytype);
         res = L;
@@ -139,7 +149,7 @@ if isa(op, 'rfun') %deal with rfuns
     dom = op.domain; %inherit properties from the rfun
     samples = []; 
     locs = []; 
-    deg = length(op.poles);
+    deg = [];
     type = 'rfun';
     return
 %%    
@@ -147,11 +157,6 @@ elseif isa(op, 'efun') %deal with efuns
     dom = op.domain;  
     samples = []; 
     locs = [];  
-    if ~isempty(varargin) && isnumeric(varargin{1})
-        deg = varargin{1}; % for input: efun(s, k), where k =< than length(s). 
-    else
-        deg = length(op); 
-    end
     type = 'efun'; 
     return
 %%    
@@ -291,10 +296,11 @@ end
 %%
 function [s, locs] = samples2coeffs(samples)
  N = length(samples);
- %this choice of N pads with correct amount of zeros if needed.
- N = N + mod(N+1,2);  %N must be odd
- N = N + 2*mod((N-1)/2, 2);  %odd number of positive coeffs
- s = 1/(length(samples))*fft(samples, N, 1); 
+ %zero-padding can cause trouble, so we truncate if N is not the 
+ %correct modality. 
+ N = N - mod(N+1,2);  %N must be odd
+ N = N - 2*mod((N-1)/2, 2);  %odd number of positive coeffs
+ s = 1/(length(samples(1:N)))*fft(samples(1:N), N, 1); 
  %coeffs correspond to modes [0..(N-1)/2]
  s = s(1:(N-1)/2+1);
  locs = (0:(N-1)/2).';

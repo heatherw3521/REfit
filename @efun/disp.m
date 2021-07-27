@@ -1,7 +1,8 @@
 function disp(F)
-%DISP   Display an EFUN to the command line.
+% Display an efun to the command line.
 % 
-% See also DISPLAY.
+%%
+% See also efun/display.
 
 % deal with empty case.  
 if ( isempty(F) )

@@ -1,12 +1,13 @@
 function display(X)
-%DISPLAY   Display information about an EFUN.
-%   DISPLAY(F) outputs important information about the EFUN F to the command
+% Display information about an efun.
+%   display(X) outputs important information about the efun X to the command
 %   window.
 %
 %   It is called automatically when the semicolon is not used at the end of a
-%   statement that results in a EFUN.
+%   statement that results in an efun.
 %
-% See also DISP.
+%%
+% See also efun/disp.
 
 disp(' ');
 disp([inputname(1), ' =']);

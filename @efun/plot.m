@@ -1,9 +1,9 @@
 function  plot(f,varargin)
-%   Basic  plot for EFUN object: if the efun is in FOURIER space, this 
-%   plots the associated trigonometric rational ift(s) on its
-%   domain. 
+% Basic  plot for efun object:plots the associated trigonometric 
+% rational ift(s) on itsdomain. 
 %
-%   See also: PLOTCOEFFS. 
+%%
+% See also: efun/plotcoeffs. 
 
 
 %% Initialization:

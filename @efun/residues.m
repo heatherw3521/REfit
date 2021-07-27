@@ -1,15 +1,10 @@
 function out = residues(s, varargin)
-% residues(s) returns the residues of the poles of ift(s). 
-%
 % residues(s, 'zt') returns the residues of the poles of r(z), 
-% where r(z) = r(x) on the unit circle and z = exp(2*pi*1i*x). 
+% where r = ift(s), r(z) = r(x) on the unit circle,
+% and z = exp(2*pi*1i*(x-a)/(b-a)) with x defined on [a, b].
 
 if isempty(s)
     out = []; 
-end
-
-if strcmp(s.space, 'value')
-    error('efun:getpoles:cannot get residues for an efun in time/signal space')
 end
 
 if isempty(varargin)

@@ -1,7 +1,7 @@
 function pass = test_sample
 %test basic functionality of the sample function
 
-[s, ~] = REFIT.gallerysum('spline'); 
+[s, ~] = gallery_efun('spline'); 
 n = s.res; 
 x = linspace(0, 1, 2*n+2); 
 x = x(1:end-1).';

@@ -1,7 +1,5 @@
 function out = ldivide(s, a)
 % s.\a = division of s by a, where a is a scalar. 
-%
-% 
 %%
 if isempty(s)
     out = []; 

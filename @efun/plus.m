@@ -5,8 +5,7 @@
  %
  % plus(s, g) is called for synax 's+g'. 
  %
- % Note: this function is not yet set up for efuns in time/signal space.
- %
+ %%
  % See also efun/compress. 
   
 %%
@@ -40,9 +39,9 @@ else  %rfuns and efuns
     error('efun:times: domain of definition for each must be the same')
     end
     %check for simple case where g is double s. 
-    if length(g) == length(s)
-        if  all(abs( sort(abs(s.exp))-sort(abs(g.exp))) < 1e-15) &&...
-                all(abs(sort(abs(s.weights)) - sort(abs(g.weights))) < 1e-15)
+    if length(g) == length(s) && g.const == s.const
+        if  all(abs(s.exp-g.exp) < 1e-15) &&...
+                all(abs(s.scl*s.weights - g.scl*g.weights) < 1e-15)
             h.scl = 2*s.scl; %just double
             h.const = 2*s.const; 
             return
@@ -63,6 +62,17 @@ else  %rfuns and efuns
     M = min(2*MM+20, D); 
     coeffs = feval(s,(0:M).') + feval(g,(0:M).'); 
     scl = max(abs(coeffs)); 
+    if scl==0
+        %efun is interpolating zero function
+        h.exp = -.5; %this is arbitrary
+        h.weights = 0; 
+        h.const = 0; 
+        h.scl = 1; 
+        h.res = 1; 
+        h.tol = tol;
+        return
+    end
+        
     coeffs = coeffs/scl; 
     while ~happy
         [r,ss,w] = prony_compress(coeffs, MM, tol); 

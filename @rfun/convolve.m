@@ -14,6 +14,7 @@ elseif isempty(g) % rfun convolve []
     return
     
 else
+    rs = ft(r); 
     if isa(g, 'function_handle') % convolve r with a function
         [~, x] = sample(r); 
         gs = efun(g(x), x); %represent function with efun. 

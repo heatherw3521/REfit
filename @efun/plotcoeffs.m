@@ -1,5 +1,4 @@
 function plotcoeffs(s, varargin)
-%
 % semilogy plot of the magnitude of the Fourier coefficients 
 % associated with ift(s). 
 %

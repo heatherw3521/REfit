@@ -3,10 +3,11 @@ function poleplot(s, varargin)
 % and superimposes the values of r(x) (plotted in the x-y plane) over the
 % plot. 
 %
-% poleplot(s, 'zt') plots the subset of poles of modulus < 1 of the function r(z) = r(x), 
-% where z = exp(2 * pi *1i *x). 
+% poleplot(s, 'zt') plots the subset of poles of modulus < 1 of the 
+% function r(z) = r(x), where z = exp(2 * pi *1i *x). 
 %
-% See also: poles, plot. 
+%%
+% See also: efun/poles, efun/plot. 
 
 dom = s.domain; 
 ms = 25;

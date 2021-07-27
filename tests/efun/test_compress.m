@@ -4,8 +4,7 @@ j = 1;
 pass(j) = isempty(compress(efun())); 
 j = j + 1; 
 
- 
-[s, ~] = REFIT.gallerysum('spline');
+[s, ~] = gallery_efun('spline');
 ss = compress(s, 1e-4); 
 
 pass(j) = (length(ss) <= length(s));

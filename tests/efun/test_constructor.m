@@ -103,7 +103,7 @@ j = j+1;
 % try on a different domain:
 fa = @(x) exp(sin(pi*(x))); 
 dom = [-1, 1]; 
-x = linspace(-1, 1, 1002).'; 
+x = linspace(-1, 1, 1002).'; x = x(1:end-1); 
 s = efun(fa, 'domain', dom); 
 pass(j) = max(abs(s(x, 'values')-fa(x))) < tol; 
 j = j+1; 
@@ -112,29 +112,33 @@ s = efun(fa, 'domain', dom, 'tol', 1e-4);
 pass(j) = max(abs(s(x, 'values')-fa(x))) < 1e-3; 
 j = j+1; 
 
-s = efun(fa(x(1:end-1)), 'domain', dom); 
+s = efun(fa(x), 'domain', dom); 
 pass(j) = max(abs(s(x, 'values')-fa(x))) < tol; 
 j = j+1;
 
-s = efun(fa(x(1:end-1)), 'domain', dom, 'tol', 1e-4); 
+s = efun(fa(x), 'domain', dom, 'tol', 1e-4); 
 pass(j) = max(abs(s(x, 'values')-fa(x))) < 1e-3; 
 j = j+1; 
 
-s = efun(fa(x(1:end-1)), x(1:end-1), 'domain', dom, 'tol', 1e-4); 
+s = efun(fa(x), x, 'domain', dom, 'tol', 1e-4); 
 pass(j) = max(abs(s(x, 'values')-fa(x))) < 1e-3; 
 j = j+1;
 
-s = efun(fa, 501, x(1:end-1), 'domain', dom, 'tol', 1e-4); 
+s = efun(fa, 501, x, 'domain', dom, 'tol', 1e-4); 
 pass(j) = max(abs(s(x, 'values')-fa(x))) < 1e-3; 
-%j = j+1;
+j = j+1;
 
+%test passing an rfun to constructor:
+r = rfun(fa(x), x, 'tol', 1e-10, 'domain', dom); 
+s = efun(r); 
+pass(j) = max(abs(s(x, 'values')-fa(x))) < tol; 
+j = j+1; 
 
-
-
-%% set 2: test vals2exp
-
-%% set 3: test other kinds of inputs (rfuns, efuns)
-
+%test passing an efun for compression: 
+s2 = efun(s,'tol', 1e-4); 
+pass(j) = max(abs(s2(x, 'values')-fa(x))) < 1e-4; 
+j = j+1; 
+pass(j) = length(s2) <= length(s); 
 
 end
 

@@ -1,16 +1,18 @@
 function vals = feval(F, x, varargin) 
 % evaluate an efun F at the points in x. 
 % 
-% feval(F, x) evaluates the exponential sum at locations in x. 
+% feval(F, x) evaluates the exponential sum at locations x. 
 %
 % feval(F, x, 'time')or feval(F, x, 'values')  evaluates the 
-% inverse Fourier transform of F at locations in x. 
+% inverse Fourier transform of F at locations x. 
 %
 % feval(F, z, 'zt') evaluates the rational r associated with F in the 
 % complex z-plane. F is the Fourier transform of r(x), where r(x) = r(z) 
-% for z restricted to the unit circle and z = exp(2*pi*1i*x).
+% for z restricted to the unit circle and z = exp(2*pi*1i*(x-a)/(b-a)), 
+%  x on [a, b]. 
 %
-% See also plot, ift. 
+%%
+% See also efun/plot, efun/ift. 
  
 [s1, s2] = size(x); 
 x = x(:); 

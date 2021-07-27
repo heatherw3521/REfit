@@ -1,5 +1,5 @@
 function out = length( F )
-%LENGTH OF AN EFUN = m, where F represents a length m sum of weighted exponentials.
+%length(F) = m.  F is a sum m of weighted exponentials.
 %   
 %%
 

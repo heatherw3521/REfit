@@ -42,12 +42,8 @@ p = (p1 + p2)/2;
 %%
 % get a sample in Fourier space to solve for weights:
 if isempty(res)
-    res = r.res;
+    res = max(r.res+(1-mod(r.res, 2)), 251);
 end
-const = r.const; %normalize sample
-scl = r.scl; 
-r.const = 0; 
-r.scl = 1; 
 happy = false; 
 while ~happy
     x = linspace(a, b, res+1); 
@@ -58,14 +54,20 @@ while ~happy
     happy = cutoff < length(y); 
     res = 2*res; 
 end
-yy = y(1:cutoff); 
+N = length(y);
+yy = y(1:max(cutoff, round(N/2))); %sometimes cutoff can be too severe, this is a bandaid for now
+%yy = y(1:cutoff); 
+N = length(yy);  
+const = yy(1); 
+yy(1) = 0; 
+scl = max(abs(yy)); 
+yy = yy/scl; 
 %%
 % use a subset of the samples to solve for weights:
-
 mm = length(poles); 
 happy = false; 
 while ~happy 
-    mm = min(2*mm, cutoff); 
+    mm = min(2*mm, N); 
     %mm = length(yy); 
     y = yy(1:mm); 
     %%
@@ -86,15 +88,19 @@ while ~happy
         w = V\y;
     end
     %check accuracy: 
-    if mm < cutoff
-        sp = min(cutoff, 20); 
-        xx = randi([0, cutoff-1], sp,1); 
-        nn = length(xx); 
-        V = repmat((p.'), nn,1); 
-        V = V.^(repmat(xx, 1,length(p)));  
-        happy = norm(V*w-yy(xx+1)) < tol;
-    else
-        happy =true; 
+    sp = min(N, 20); 
+    xx = [(0:min(50, mm-1)).'; randi([0, N-1], sp,1)]; 
+    nn = length(xx); 
+    V = repmat((p.'), nn,1); 
+    V = V.^(repmat(xx, 1,length(p)));  
+    happy = norm(V*w-yy(xx+1)) < tol;
+    if ~happy && mm == N
+        %if ft fails just call efun on the sample:
+        yy = scl*yy;
+        yy(1) = const; 
+        yy = [flip(conj(yy(2:end)));yy]; 
+        s = efun(yy, -(N-1):(N-1), 'tol', tol, 'domain', dom, 'coeffs');
+        return 
     end
 end
 
@@ -109,9 +115,9 @@ s.space = 'Fourier';
 s.domain = r.domain; 
 s.const = const; 
 s.scl = scl;
-res = res/2; 
+ 
 
-s.res = ((res+mod(res,2))/2); 
+s.res = ((N+mod(N,2))/2); 
 
 end
 

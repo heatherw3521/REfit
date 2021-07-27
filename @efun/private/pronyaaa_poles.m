@@ -32,6 +32,18 @@ F = F(toKeep); Z = Z(toKeep);
 V = cot(pi*(P - Z.'));
 V = [V; F.']; 
 [~, ~, idx] = qr(V, 'vector');
+%
+% if the gap is large, we can solve directly for the weights using V: 
+% rdiag = diag(R)/R(1,1); 
+% if rdiag(end)/rdiag(end) > 1e-2 && rdiag(end)<1e-11
+%     [~, ~, W] = svd(V(:,idx(1:lp))); 
+%     wj = W(:, end);  
+%     zj = Z(idx(1:lp)); 
+%     fj = F(idx(1:lp)); 
+%     [pol, res] = pr(zj, fj, wj, dom);
+%     zj = zj*(b-a)+a; %correct nodes to match domain
+%     return
+% end
 zj = Z(idx(1:m)); %candidate support points 
 Zo = Z; 
 Z(idx(1:m)) = []; 

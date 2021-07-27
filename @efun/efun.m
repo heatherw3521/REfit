@@ -1,9 +1,9 @@
 classdef efun
-% % s = efun(f) 
+% s = efun(f) 
 %
-% EFUN class for representing sums of weigthed decaying complex exponentials. 
+% EFUN class for representing sums of weighted decaying complex exponentials. 
 %
-% These sums are used to approximate the Fourier series of f (default),
+% These sums approximate the Fourier series associated with the function f,
 % (eventually we will also include the option to represent f directly.)
 % 
 % INPUT: 
@@ -11,17 +11,17 @@ classdef efun
 % f can also be a function handle, chebfun, or rfun object.
 %
 % s = efun(f, x,'coeffs'). f is a consecutive set of Fourier coefficients,
-%  'x' is a vector of modes, by default x = [-N...0...N]. 
+% 'x' is a vector of modes, by default x = [-N...0...N], where
+% length(f) = 2N+1.
 %
 % s = efun(f, 'domain', [a b], 'tol', tol). Sets tol and domain. 
 % domain is time/value space. 
 %
-% default tol = 1e-10*max(f), default domain = [0, 1].
+% default tol = 1e-9*max(f), default domain = [0, 1].
 %
-% s = efun(f, varargin, 'values'): constructs an exponential sum s
-% that approximates f directly from equally spaced samples on the given domain. 
-%
-%% SEE (literature).
+%% EFUNS are a representation based on ideas from the following: 
+% [1] Wilber, H., Damle, A., and Townsend, A. (2021)
+% [2] Beylkin, G., and Monz{'o}n, L. (2009). 
 
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  %% CLASS CONSTRUCTOR:

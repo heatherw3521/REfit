@@ -2,24 +2,26 @@ function r = ift(s,varargin)
 % The inverse Fourier transform of s.  
 %
 % r = ift(s) returns an rfun representing a barycentric trigonometric rational 
-% function corresponding to the inverse Fourier transform of s (See [2]). 
+% function corresponding to the inverse Fourier transform of s (See [1]). 
 %
 % ift(s, 'pr') returns a handle to the pole-residue form of r(x).
 % ift(s, 'zt') returns a handle for the pole-residue form of 
-% r(z), where z = exp(2*pi*1i*x/diff(dom(s.domain)). 
+% r(z), where z = exp(2*pi*1i*(x-s.domain(a))/diff((s.domain)). 
 %
 % For rfuns:
-% ift(s, 'cpqr')  uses CPQR pivoting to do AAA (default) (See [2]).
-%
-% ift(s, 'aaa') applies standard AAA (i.e., greedy pivoting) (See [1]).
+% ift(s, 'cpqr')  uses CPQR pivoting to do AAA (default) (See [1]).
+% ift(s, 'aaa') applies standard AAA (i.e., greedy pivoting) (See [1,2]).
 %
 % ift(s, locs, 'type') applies AAA on the grid given by locs, 
 % with pivoting style given by 'type'. 
 %
-% See also rfun/ft. 
 %%
-
-%% ADD LITERATURE
+% See also rfun/ft. 
+%% More information can be found in the following:
+% [1] Wilber, H., Damle, A., and Townsend, A. (2021). 
+%
+% [2] Nakatsukasa, Y., S{`e}te, O., and Trefethen, L.N., (2018).
+%%
 
 if isempty(s)
     r = []; 
@@ -74,7 +76,7 @@ if (strcmpi(type, 'polres')  || strcmpi(type,'zt') )
 elseif ( strcmpi(type, 'cpqr') || strcmpi(type, 'aaa') )
     dom = s.domain; a = dom(1); b = dom(2); 
     if isempty(nums)
-        NN = s.res;
+        NN = min(s.res, 500);
     else
         NN = nums; 
         NN = NN + mod(2,1); 

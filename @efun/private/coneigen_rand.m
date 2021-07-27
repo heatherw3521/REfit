@@ -38,7 +38,10 @@ function [S,V] = rand_svd_hankel(cl,rw,N,l)
 % (Here, U = Q*W, where W are the right sing. vecs of B)
 
 %appx the range of H
+ 
+rng(0)
 Omega = randn(N,l);
+
 Y = hankelmult(rw, cl, Omega); 
 [Q, ~] = qr(Y,0);
 

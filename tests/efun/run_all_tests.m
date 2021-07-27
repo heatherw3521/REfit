@@ -1,0 +1,15 @@
+function pass = run_all_tests()
+%run all the efun tests. 
+pass(1) = all(test_coeffs) 
+pass(2) = all(test_compress) 
+pass(3) = all(test_constructor) 
+pass(4) = all(test_convolve)
+pass(5) = all(test_diff)
+pass(6) = all(test_feval)
+pass(7) = all(test_ift)
+pass(8) = all(test_integral)
+pass(9) = all(test_plotfns)
+pass(10) = all(test_plus)
+pass(11) = all(test_sample)
+pass(12) = all(test_times)
+end

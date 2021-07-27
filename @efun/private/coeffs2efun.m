@@ -5,8 +5,11 @@ function [w,r, res, ss]= coeffs2efun(cp, x, chop_on, tol, pronytype)
 %  Returns mx1 vectors of weights (w) and nodes (r), 
 %  so that cp_(x(k)) \approx \sum_{j = 1}^{m}w_j exp(r(x(k))) 
 %
-%  coeffs2exp(f, tol, 'rand') computes w and r using a randomized SVD,
-%  which is faster. 
+%  coeffs2exp(f, tol, 'randomized') computes w and r using a randomized
+%  SVD to approximately solve the coneigenproblem. This is the default. 
+%
+%  coeffs2exp(f, tol, 'standard') computes w and r using the standard
+%  SVD to solve the coneigenproblem. 
 %
 %  If deg is populated, then the exponential sum is built so that m \leq
 %  deg. 
@@ -24,18 +27,20 @@ n = length(cp);
 % the coeffs: 
 
 if chop_on
-choptol = eps; 
-cutoff = standardChop(cp, choptol);
- 
+    choptol = eps; 
+    cutoff = standardChop(cp, choptol);
 %make the cutoff have the right parity:
-N = cutoff + mod(cutoff+1, 2);
-N = N + 2*mod((N-1)/2, 2); 
-if N > n %pad with zeros
-    cp = [cp; zeros(N-n,1)]; 
-    x = [x; ((x(end)+1):x(end)+N-n).'];
+    N = cutoff + mod(cutoff+1, 2);
+    N = N + 2*mod((N-1)/2, 2); 
+    if N > n %pad with zeros
+        cp = [cp; zeros(N-n,1)]; 
+        x = [x; ((x(end)+1):x(end)+N-n).'];
+    else
+        cp = cp(1:N); 
+        x = x(1:N); 
+    end
 else
-    cp = cp(1:N); 
-    x = x(1:N); 
+    N = n; 
 end
 %%
 % find roots of Prony polynomial:
@@ -49,7 +54,7 @@ if ( length(cp)==1 )
         return
 end
 [z,ss] = coneigen(cp,tol, pronytype); 
-end
+
 
 %roots of Prony polynomial are exponents for our sum. 
 r = log(z); 

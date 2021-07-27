@@ -1,5 +1,5 @@
 function F = sample2coeffs(f, varargin)
-%gets correct vector of Fourier coeffs to pass to efun constructor.
+% gets correct vector of Fourier coeffs to pass to efun constructor.
 %
 % f can be a vector or a function handle or chebfun. 
 % With function handle:
@@ -31,6 +31,6 @@ if (any(strcmpi(varargin, 'pos')) || any(strcmpi(varargin, 'positive'))...
 || any(strcmpi(varargin, 'nonneg')))
  
 %get the non-neg indexed coeffs only:
-n = length(F); 
-F = F((n-mod(n,2))/2+1:end);
+    n = length(F); 
+    F = F((n-mod(n,2))/2+1:end);
 end

@@ -4,7 +4,6 @@ function varargout = sample(s, varargin)
 % [vals, loc] = sample(s) returns a sample (vals) of r(x) = ift(s) on
 % its domain on the sampling grid (loc) that was used to construct s.
 %
-%
 % [vals, loc] = sample(s, 'Fourier'). Samples s in Fourier space. 
 
 if isempty(s)

@@ -2,7 +2,6 @@ function out = mtimes(s, a)
 % a*m = times s by a, where a is a scalar. 
 %
 %%
-
 if isempty(s)
     out = []; 
     return

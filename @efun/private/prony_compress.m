@@ -24,44 +24,49 @@ end
 
 % build Hankel matrix  with m + 1 columns
 n = length(cp); 
-H = hankel(cp(1:n-m-1), cp(n-m-1:end)); 
-[~, S, V]  = svd(H); 
-ss = diag(S);
-s = ss(ss > ss(1)*tol); 
-M = min(m+1, length(s)+1);  
-x = V(:,M);        
+% if n-m = m+1, we aren't gaining anything
+% with rectangular matrices and should just do usual Prony's method:
+if (n-m == m+1)
+   [w,r, ~, ss] = coeffs2efun(cp, (0:n-1).', 0, tol, 'randomized');
+else
+    H = hankel(cp(1:n-m-1), cp(n-m-1:end)); 
+    [~, S, V]  = svd(H); 
+    ss = diag(S);
+    s = ss(ss > ss(1)*tol); 
+    M = min(m+1, length(s)+1);  
+    x = V(:,M);        
 %%
 % now find roots of Prony's polynomial: 
-z = roots(flip(x(:).')); %solve via companion matrix
+    z = roots(flip(x(:).')); %solve via companion matrix
 %get rid of roots at infinity and zero;
-z = z(~isinf(z)); 
-z = z(~(z==0));
+    z = z(~isinf(z)); 
+    z = z(~(z==0));
 %keep only roots that are in unit disk. 
-z = z(abs(z) < 1); 
+    z = z(abs(z) < 1); 
 
 %% 
 %roots of Prony polynomial are exponents for our sum. 
-r = log(z); 
-M = length(r);
+    r = log(z); 
+    M = length(r);
 %% find weights w/ LSQ sol to Vandermonde system
 
-x = (0:n-1).';
+    x = (0:n-1).';
 
-V = repmat((z.'), n,1); 
-V = V.^(repmat( x, 1,M));  
-w = V\cp;
+    V = repmat((z.'), n,1); 
+    V = V.^(repmat( x, 1,M));  
+    w = V\cp;
  
 % shorten the sum if possible
-if ~isempty(find(abs(w)<= tol, 1))
-    idx = find(abs(w)> tol); 
-    z = z(idx); 
-    r = r(idx); 
-    M = length(r); 
+    if ~isempty(find(abs(w)<= tol, 1))
+        idx = find(abs(w)> tol); 
+        z = z(idx); 
+        r = r(idx); 
+        M = length(r); 
     %need to recompute the weights 
-    V = repmat((z.'), n,1); 
-    V = V.^(repmat(x, 1,M));  
-    w = V\cp;
-end
+        V = repmat((z.'), n,1); 
+        V = V.^(repmat(x, 1,M));  
+        w = V\cp;
+    end
 
 end
 

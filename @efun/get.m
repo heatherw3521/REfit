@@ -1,7 +1,7 @@
 function val = get( s, propName )
-%GET       GET method for efuns.
-%   P = GET(s, PROP) returns the property P specified in the string PROP from
-%   Valid entries for the string PROP are:
+% get method for efuns.
+%   val = get(s, propName) returns the property P specified in the string 
+%   propName. Valid entries for the string propName are:
 %    'exp'
 %    'weights'
 %    'domain'

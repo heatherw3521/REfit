@@ -1,4 +1,4 @@
-function [r, pol, res, zj, fj, wj, errvec, N] = pronyaaa(F, Z, dom, tol, mmax, cleanup_flag)
+function [r, pol, res, zj, fj, wj, errvec, NN] = pronyaaa(F, Z, dom, tol, mmax, cleanup_flag)
 %%
 % constructs a type (k-1, k) barycentric trigonometric rational interpolant to F.
 % Interpolating points are chosen from Z. See [3] for more details; 
@@ -22,7 +22,7 @@ toKeep = ~isinf(F);
 F = F(toKeep); Z = Z(toKeep);
 toKeep = ~isnan(F);
 F = F(toKeep); Z = Z(toKeep);
-M = length(Z);
+M = length(Z);NN=M;
 a = dom(1); 
 b = dom(2); 
 %map domain to [0, 1]: 
@@ -121,7 +121,7 @@ end
 zj(I) = [];
 wj(I) = [];
 fj(I) = [];
-N = length(F); %length of domain sample. 
+ 
 
 % Construct function handle to evaluate r:
 r = @(zz) reval(zz, zj, fj, wj);
