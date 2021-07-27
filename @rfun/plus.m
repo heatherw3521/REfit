@@ -14,25 +14,24 @@ if ~isa(r, 'rfun') || isempty(r) % make the first input an rfun:
 
 elseif isempty(g) %efun + []
     h = []; 
-    return
-    
+    return    
 elseif isa(g, 'double') %g is a scalar
     if ~all(size(g)==1)
         error('rfun:plus:input must be rfuns, scalars, or efuns.')
     end
-    h = r; 
+    h = r;
     h.const = r.const + g; % just add in the constant. 
     return
-    
 else
+    h = r;
     % either g is an rfun or an efun
     if ~(r.domain == g.domain) %check that domains match
     error('rfun:plus: domain of definition for each object must be the same')
     end
     %check for simple case where g is double r. 
-    if isa(g, 'rfun') && length(g) == length(r)
-        if  all(abs( sort(abs(r.nodes))-sort(abs(g.nodes))) < 1e-15) &&...
-                all(abs(sort(abs(r.weights)) - sort(abs(g.weights))) < 1e-15)
+    if isa(g, 'rfun') && length(g) == length(r) && g.const == r.const
+        if  all(abs( sort((r.nodes))-sort((g.nodes))) < 1e-15) &&...
+                all(abs(sort(abs(r.scl*r.weights)) - sort(abs(g.scl*g.weights))) < 1e-15)
             h.const = 2*r.const; %double constant.
             h.vals = 2*r.vals; %double values at nodes. 
             return
@@ -42,7 +41,8 @@ else
     % call compression + in efun 
     % (this avoids using the rfun constructor directly and 
     % alleviates some issues with sampling grids that don't account
-    % for singularity locations):
+    % for singularity locations), and it is also usually faster than
+    % reconstructing via rfun.
     rf = ft(r); 
     if isa(g, 'rfun') 
       gf = ft(g); 

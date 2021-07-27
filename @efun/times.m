@@ -28,6 +28,11 @@ elseif isa(g, 'double') %g is a scalar
     h = s; 
     h.scl = g*s.scl; 
     h.const = g*s.const; 
+    if g==0 %compress
+        h.exp = h.exp(1); 
+        h.weights = h.weights(1); 
+        h.res = 1; 
+    end
     return
     
 else  %efuns, rfuns, and function handles. 
@@ -45,6 +50,15 @@ else  %efuns, rfuns, and function handles.
                                                % space.
         error('efun:times: "times" for efuns in signal space not yet available.')
         end
+        % is either one of these a constant?
+        if all(g.weights==0) 
+            h = times(s, g.const); 
+            return;
+        end
+        if all(s.weights==0)
+            h = times(g, s.const); 
+            return;
+        end  
         % part 1: guess the upper bound on length of h: 
         m1 = length(s).*length(g); 
 
@@ -53,7 +67,7 @@ else  %efuns, rfuns, and function handles.
         G = G(:); 
         [~, idxw] = find(abs(G) < tol); % # weight combos below tol
 
-    %check for small exponents (usually a more efficient way): 
+    %check for small exponents : 
         G = s.exp + (g.exp).';
         G = G(:); 
         [~, idxe] = find(abs(G) > abs(log(tol))); %exponents too big.

@@ -17,6 +17,12 @@ wj = r.weights;
 const = r.const; 
 scl = r.scl; 
 
+%Deal with special cases where r is zero or a constant: 
+if all(r.vals==0)
+    vals = r.const; 
+    return
+end
+
 % Evaluate rational function in barycentric form.
 
 CC = bsxfun(@(vals, params) cot(pi*(vals - params)), zz, zj.'); 

@@ -38,8 +38,9 @@ switch type
             scl = max(samples); 
             %what to do about zero function:
             % we assign arbitrary poles/nodes/weights.
-            if abs(scl) <1e-13 && const < 1e-13
+            if abs(scl) <1e-13 
                 r.domain = dom;
+                r.const = const;
                 r.poles = [dom(1)+1i;dom(1)-1i];
                 r.weights = [1; 1];
                 r.nodes = [diff(dom)/4; 3*diff(dom)/4];

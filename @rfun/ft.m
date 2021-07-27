@@ -11,6 +11,20 @@ function s = ft(r, varargin)
 
 
 %%
+%
+if isempty(r)
+    s = [];
+    return
+end
+
+if all(r.vals==0) %deal with zero function and constants
+        s = efun([0;0]);
+        s.domain = r.domain;
+        s.const = r.const;
+        s.scl = r.scl;
+        return
+end
+    
 % check for tol parameter: 
 tol = 1e-10;
 res = []; 

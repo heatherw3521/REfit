@@ -16,8 +16,17 @@ if isempty(s)
 end
 
 res = s.res; 
+Fourier_flag = 0;
+for j = 1:nargin-1
+    up = varargin{j}; 
+    if isnumeric(up)
+        res = up; 
+    else %up = 'Fourier'. Get coeffs.
+        Fourier_flag = 1;
+    end
+end
 dom = s.domain; 
-if isempty(varargin)
+if ~Fourier_flag
     %sample in time: 
     loc = linspace(dom(1), dom(2), 2*res+2); loc = loc(1:end-1).';
     vals = feval(s, loc, 'values'); 

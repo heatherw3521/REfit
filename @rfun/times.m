@@ -27,6 +27,16 @@ elseif isa(g, 'double') %g is a scalar
     h = r; 
     h.vals = g*r.vals; 
     h.const = g*r.const; 
+    %if g is zero then compress:
+    if g==0
+        h.nodes = [h.nodes(1);h.nodes(2)] ; 
+        h.weights = [h.weights(1); h.weights(2)];
+        h.vals = [h.vals(1); h.vals(2)];
+        h.poles = [h.poles(1); h.poles(2)];
+        h.residues = [h.residues(1); h.residues(2)];
+        h.res = 2; 
+    end
+        
     return
     
 elseif isa(g, 'function_handle')
@@ -36,7 +46,7 @@ elseif isa(g, 'function_handle')
     
 else  %rfuns and efuns
     %check domains: 
-    if ~all(s.domain == g.domain)
+    if ~all(r.domain == g.domain)
        error('efun:times: domain of definition for each must be the same')
     end
     %for now we just call constructor. Maybe a better choice is to 
@@ -50,11 +60,12 @@ else  %rfuns and efuns
     resm = max(resg, resr); 
     [rs, x] = sample(r, resm); 
     if isa(g, 'efun')
-        gs = feval(g, 'values'); 
+        gs = feval(g, x,'values'); 
     else
-        gs = feval(g); 
+        gs = feval(g, x); 
+    end
     h = rfun(gs.*rs, x); 
-    
+end
     %todo: add in the option to return efun. 
     %% alternative method:
     % to compute r.*g,  we convert to Fourier space and convolve

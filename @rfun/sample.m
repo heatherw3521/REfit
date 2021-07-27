@@ -16,6 +16,9 @@ if isempty(r)
 end
 
 res = r.res; 
+if ~isempty(varargin)
+    res = varargin{1}-1; 
+end
 dom = r.domain; 
 loc = linspace(dom(1), dom(2), res+1); loc = loc(1:end-1).';
 vals = feval(r, loc); 

@@ -48,10 +48,10 @@ switch type
         const = samples(1); 
         samples(1) = 0; 
         scl = max(abs(samples)); 
-        if scl ==0; %efun to represent 0
+        if abs(scl) <= 1e-13 %efun to represent 0
             F.weights = 0; 
             F.exp = .5; 
-            F.const = 0; 
+            F.const = const; 
             F.scl = 1; 
             F.res = 1; 
             F.sv = []; 

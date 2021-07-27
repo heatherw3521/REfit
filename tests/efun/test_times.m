@@ -27,6 +27,18 @@ catch
 end
 j = j+1; 
 
+%test times a zero
+s1 = efun([0;0]); 
+s2 = s.*s1; 
+pass(j) = all(s2(0:100)==0);
+j = j+1; 
+
+%test times a constant
+s1.const = 5; 
+s2 = s1.*s; 
+pass(j) = max(abs(s2(0:100)-5*s(0:100)))<tol; 
+j = j+1;
+
 %test efun times function_handle
 f = @(j) s(j); 
 s2 = s.*f; 

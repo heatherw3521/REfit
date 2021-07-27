@@ -19,7 +19,7 @@ end
 
 % The main switch statement.
 switch lower(name)
-        
+    
     case 'abs' 
         fa = @(x) abs(x-.5);
         n = 6000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
@@ -66,9 +66,6 @@ else
 end
 
 end
-
-
-
 
 function s = wild(x)
 % The 'wild' function from Computing Numerically with Functions, Trefethen 2007.

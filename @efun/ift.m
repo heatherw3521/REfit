@@ -28,6 +28,16 @@ if isempty(s)
     return
 end
 
+%deal with zero function and constants: 
+if all(s.weights==0) 
+    r = rfun([0;0], [s.domain(1)+1/diff(s.domain);...
+        s.domain(1)+(diff(s.domain)-1)/diff(s.domain)]);
+    r.domain =s.domain;
+    r.const = s.const;
+    r.scl = s.scl;
+    return
+end
+
 %% 
 % set defaults:
 type = 'cpqr';  
