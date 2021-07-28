@@ -5,9 +5,9 @@ function mx = max(r, varargin)
 %%
 % see also rfun/extrema
 
-[~,mx, ~] = extrema(r); 
+[~,mx] = extrema(r); 
 
 if ~isempty(varargin) %want absolute min
-   [~, idx] = sort(feval(r, mx));
-   mx = mx(idx(end)); 
+   [~, idx] = sort(feval(r, mx)); 
+    mx = mx(idx(end)); 
 end

@@ -4,15 +4,11 @@ warning off
 j = 1; 
 tol = 5e-6; 
 
-% NOTE 1: the 'wild' function is one that efun struggles to resolve. 
+% NOTE 1: the 'wild' function is one that rfun struggles to resolve. 
 % Using it to test the ift initiates the contigency loops in the ift, 
-% which is what we want to test. (a better way to construct 'wild' is to 
-% use rfun; then the ft if one wants an efun). 
+% which is what we want to test. 
 %
-% NOTE 2: a strange feature of the randomized Hankel approach + the fact
-% that exponential sums are "sloppy models" is that
-% the nodes/weights are not the same each time efun is called. 
-% (maybe we should fix this by seeding ?). 
+ 
 
 [s, fa] = gallery_efun('wild'); 
 x = linspace(0, 1, 3000).'; 
@@ -67,21 +63,22 @@ j = j+1;
 % a few tests with nonstandard domain:
 % why these perform more poorly is something to further
 % investigate. they should be the same
+[s, fa] = gallery_efun('spline'); 
 xx = linspace(3, 5, 3000).';  
-x1 = linspace(0, 1, 2*4000+2).'; x1 = x1(1:end-1);
+x1 = linspace(0, 1, 2*2000+2).'; x1 = x1(1:end-1);
 ss = efun(fa(x1), 'tol', 1e-7, 'domain', [3, 5]);  
 r = ift(ss, 'polres');
-pass(j) = max(abs(r(xx) - fa(x)))< 1e1*tol;
+pass(j) = max(abs(r(xx) - fa(x)))< tol;
 j = j+1; 
 
 r2 = ift(ss); 
-pass(j) = max(abs(r2(xx) - fa(x)))< 1e3*tol;
+pass(j) = max(abs(r2(xx) - fa(x)))< 8*tol;
 j = j+1; 
 pass(j) = all(real(r2.poles) >= 3 & real(r2.poles) <= 5);
 j = j+1; 
  
 r = ift(ss, 'aaa');
-pass(j) = max(abs(r(xx) - fa(x)))< 1e3*tol;
+pass(j) = max(abs(r(xx) - fa(x)))< tol;
 j = j+1; 
 pass(j) = all(real(r2.poles) >= 3 & real(r2.poles) <= 5);
  

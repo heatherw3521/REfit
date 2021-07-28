@@ -36,7 +36,7 @@ else  %rfuns and efuns
     end
     h = s; 
     if ~(s.domain == g.domain) %check that domains match
-    error('efun:times: domain of definition for each must be the same')
+        error('efun:times: domain of definition for each must be the same')
     end
     %check for simple case where g is double s. 
     if length(g) == length(s) && g.const == s.const
@@ -58,8 +58,8 @@ else  %rfuns and efuns
     tol = 1e-10; 
     happy = false;
     D = max([s.res, g.res]); 
-    MM = min( (length(s.exp)+ length(g.exp)), (D + mod(D,2))/2);
-    M = min(2*MM+20, D); 
+    MM = min( (length(s.exp)+ length(g.exp)), (D-1 + mod(D-1,2))/2);
+    M = min(2*MM+20, D+1); 
     coeffs = feval(s,(0:M).') + feval(g,(0:M).'); 
     scl = max(abs(coeffs)); 
     if scl==0

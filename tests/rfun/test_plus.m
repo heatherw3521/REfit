@@ -32,12 +32,11 @@ r1 = r-r;
 pass(j) = all(abs(r1(x))==0);
 
 %plus two rfuns: 
-[rb, fb] = gallery_rfun('wild');
+[rb, fb] = gallery_rfun('abs');
+rb = compress(rb, 1e-6); 
 h = @(x) fb(x) + fa(x); 
 h2 = r + rb; 
-pass(j) = max(abs(h2(x)-h(x))) < 5e1*tol;  
-
-%plus an rfun and efun:
+pass(j) = max(abs(h2(x)-h(x))) < 7*1e-5;  
 
 
 end

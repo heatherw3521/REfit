@@ -69,11 +69,14 @@ while ~happy
     %check for resolution: (check decay on coeffs):
     cutoff = standardChop(y, min(1e-10,tol));
     happy = cutoff < length(y); 
+    if res > 20000 % max sample
+        break
+    end
     res = 2*res; 
 end
-N = length(y);
-yy = y(1:max(cutoff, round(N/2))); %sometimes cutoff can be too severe, this is a bandaid for now
-%yy = y(1:cutoff); 
+%Ns = length(y)-1;
+%yy = y(1:max(cutoff, round(Ns/2))); %sometimes cutoff can be too severe, this is a bandaid for now
+yy = y(1:cutoff); 
 N = length(yy);  
 const = yy(1); 
 yy(1) = 0; 
@@ -112,7 +115,7 @@ while ~happy
     V = V.^(repmat(xx, 1,length(p)));  
     happy = norm(V*w-yy(xx+1)) < tol;
     if ~happy && mm == N
-        %if ft fails just call efun on the sample:
+        %if ft fails give up and call efun on the sample:
         yy = scl*yy;
         yy(1) = const; 
         yy = [flip(conj(yy(2:end)));yy]; 
@@ -132,6 +135,7 @@ s.space = 'Fourier';
 s.domain = r.domain; 
 s.const = const; 
 s.scl = scl;
+s.tol = r.tol;
  
 
 s.res = ((N+mod(N,2))/2); 

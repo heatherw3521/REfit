@@ -36,8 +36,8 @@ switch lower(name)
         
     case 'wild' 
         fa = @(x) wild(x); 
-        n = 3000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
-        f = rfun(fa(x), x, 'tol', 1e-9); 
+        n = 4000; x = linspace(0, 1, 2*n+2); x = x(1:end-1).';
+        f = rfun(fa(x), x, 'tol', 1e-5); 
         
     case 'wilder' 
         fa = @(x) wilder(x); 

@@ -45,7 +45,7 @@ f2 = @(x) f2(x) - const;
 
 tru = @(x) f1(x).*f2(x);  
 s3 = convolve(s1, s2); 
-pass(j) = max(abs(s3(x, 'values') - tru(x)))<tol; 
+pass(j) = max(abs(s3(x, 'values') - tru(x)))<5e3*tol; 
 
 end
 

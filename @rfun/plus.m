@@ -48,7 +48,7 @@ else
       gf = ft(g); 
     else
       gf = g;
-    end
+   end
     hf = rf+gf; 
     h = ift(hf); 
     %to do: add a 'type' flag allowing the return of an efun if desired. 

@@ -54,12 +54,12 @@ classdef efun
         res %resolution limit originally used to construct approximation
             % res=L means that s was constructed with a least squares fit
             % to Fourier coeffs [-L, L].
+        tol % orginal tolerance parameter for constructing efun.
     end
     
     properties (Access = private)
         sv % singular values of the Hankel matrix used in 
            % Prony's method. 
-        tol % orginal tolerance parameter for constructing efun.
     end
     
      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

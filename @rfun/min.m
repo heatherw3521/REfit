@@ -5,7 +5,7 @@ function mins = min(r, varargin)
 %%
 % see also rfun/extrema
 
-[mins, ~, ~] = extrema(r); 
+[mins, ~] = extrema(r); 
 
 if ~isempty(varargin) %want absolute min
    [~, idx] = sort(feval(r, mins));

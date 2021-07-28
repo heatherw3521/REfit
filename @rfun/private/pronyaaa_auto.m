@@ -21,20 +21,20 @@ for n = 5:14
     % Test if rational interpolant is accurate:
     reltol = tol * norm(F(Z), inf);
     % on the sample: 
-    err(1,1) = norm(F(Z) - scl*r(Z)+const, inf);
+    err(1,1) = norm(F(Z) - (scl*r(Z)+const), inf);
     
     % on a refined grid:
     Zrefined = linspace(dom(1), dom(2), ...
         round(1.5 * (1 + 2^(n+1)))).';
     Zrefined = Zrefined(1:end-1); 
-    err(2,1) = norm(F(Zrefined) - scl*r(Zrefined)+const, inf);
+    err(2,1) = norm(F(Zrefined) - (scl*r(Zrefined)+const), inf);
     
     if ( all(err < reltol) )
         % Final check that the function is resolved, inspired by sampleTest().
         % test on pseudo random sample points:
         xeval = rand(10,1)*(dom(2)-dom(1)) + dom(1);
         
-        if ( norm(F(xeval) - scl*r(xeval)+const, inf) < reltol )
+        if ( norm(F(xeval) - (scl*r(xeval)+const), inf) < reltol )
             isResolved = 1;
             break
         end

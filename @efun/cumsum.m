@@ -30,7 +30,7 @@ end
 type = 'handle'; 
 %%
 % if ift(s) is not a mean zero function, we subtract off the mean.
-if abs(s.const)>1e-13
+if abs(s.const)>1e-8
     warning('efun:cumsum: cumsum is performed on efuns representing mean zero functions. Setting mean to zero now.') 
 end
 s.const = 0; 

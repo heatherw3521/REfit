@@ -30,7 +30,9 @@ end
 %handle the constant term: 
 const = r.const; 
 r.const = 0; 
+warning off
 s = cumsum(ft(r), 'efun'); 
+warning on
 d = r.res; 
 h = @(x) eval_cumsum(s, x, const, a);
 if strcmpi(type, 'handle') %wants function handle
@@ -42,7 +44,7 @@ elseif strcmpi(type, 'rfun')
     end
     S = ift(s);
 elseif strcmpi(type, 'efun')
-    if abs(const) >1e-12 %not a mean zero function
+    if abs(const) >1e-8 %not a mean zero function
         warning('rfun:cumsum: setting mean to zero.')
     end
     S = s; 

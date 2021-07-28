@@ -20,7 +20,7 @@ switch type
         % adaptive sampling + pronyAAA
                     %call pronyAAA: 
             if isempty(deg)
-                deg = 400; % deg = max # iterations. 
+                deg = 100; % deg = max # iterations. 
             end
             [~, pol, res, zj, fj, wj, err, N, const, scl] = pronyaaa_auto(op, dom, tol, deg, cleanup);
             tol = err;      
@@ -30,7 +30,7 @@ switch type
         else
             %call pronyAAA: 
             if isempty(deg)
-                deg = min(400, length(samples)); % deg = max # iterations. 
+                deg = min(100, length(samples)); % deg = max # iterations. 
             end
             % we want a mean zero function: 
             const = mean(samples); 
@@ -108,7 +108,7 @@ function [dom, tol, type, deg, samples, locs, poles, cleanup] = parse_input(op, 
   
   %adjust tol if degree is given and no tol was specified: 
   if ~isempty(deg) && isempty(tolid) 
-    tol = 5e-12; 
+    tol = 1e-11; 
   end
   
   %determine if poles are given: 

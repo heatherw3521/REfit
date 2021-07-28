@@ -10,9 +10,7 @@ pass(j) = length(r)>=2*length(s2); %1
 j = j+1;
 pass(j) = max(abs(s(x, 'values')-s2(x, 'values'))) < tol; %2
 j = j+1; 
-r2 = ift(s2); 
-pass(j) = max(abs(r2(x)-r(x))) < tol; %3
-j = j+1;
+
 
 s2 = ft(r, 2000); %input a sample size parameter
 pass(j) = max(abs(s(x, 'values')-s2(x, 'values'))) < tol; %4
@@ -41,9 +39,6 @@ s = ft(r);
 pass(j) = length(r)>=2*length(s); %9
 j = j+1;
 pass(j) = max(abs(s(x, 'values') - r(x))) < tol;  %10
-j = j+1; 
-r2 = ift(s); 
-pass(j) = max(abs(r(x) - r2(x))) < tol; %11
 
 end
 

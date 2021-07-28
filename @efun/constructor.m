@@ -40,7 +40,7 @@ switch type
         return
 %% case 3: rfun input    
     case 'rfun'
-        F = ft(op, 'tol', tol); %call Fourier transform
+        F = ft(op); %call Fourier transform
         return
 %% case 4:construct efun in Fourier space from coeffs
     case 'coeffs'
