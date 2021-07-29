@@ -3,7 +3,7 @@ function pass = test_integral()
 tol = 1e-7; 
 j = 1; 
 
-f = @(x) exp(sin(2*pi*x))-1.266065877752008; 
+f = @(x) exp(sin(2*pi*x))-1; 
 x = linspace(0, 1, 2*500+2).'; x = x(1:end-1);
 df = @(x) 2*pi.*cos(2*pi*x).*exp(sin(2*pi*x)); 
 
@@ -42,7 +42,7 @@ pass(j) = max(abs(h(x)-ff(x))) < tol;
 j = j+1;
 
 % %test nonstandard domain: 
- f = @(x) exp(sin(pi*x))-1.266065877752008; %make it a mean zero function
+ f = @(x) exp(sin(pi*x))-1; %make it a mean zero function
  x = linspace(2, 4, 2*500+2).'; x = x(1:end-1);
  df = @(x) pi.*cos(pi*x).*exp(sin(pi*x)); 
  dr = rfun(df(x), 'tol', 1e-8, 'domain', [2,4]);
@@ -77,7 +77,7 @@ j = j+1;
  j = j+1;
 % 
 % %mean value zero function + const
- f = @(x) exp(sin(pi*x))-1.266065877752008+2*x;
+ f = @(x) exp(sin(pi*x))-1+2*x;
  I = integral(dr, [a, b]); 
  pass(j) = abs(I -(f(b)-f(a)))<tol ;
 
