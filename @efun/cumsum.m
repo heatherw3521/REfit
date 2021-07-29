@@ -79,6 +79,6 @@ dom = s.domain;
 L = dom(2)-dom(1); 
 j = j(:);  
 vals =  L*feval(s, j)./(2*pi*1i*j); 
-vals((j==0)) = const; %fix where j = 0; should be the sum of 
+vals((j==0)) = L*const; %fix where j = 0; should be the sum of 
 end
 
