@@ -77,8 +77,10 @@ function vals = eval_coeff(s, j, const)
 %s is efun, j = coeffs to eval
 dom = s.domain; 
 L = dom(2)-dom(1); 
+sz = size(j); 
 j = j(:);  
 vals =  L*feval(s, j)./(2*pi*1i*j); 
 vals((j==0)) = L*const; %fix where j = 0; should be the sum of 
+j = reshape(j, sz); 
 end
 

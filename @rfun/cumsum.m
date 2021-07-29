@@ -64,7 +64,10 @@ end
 end
 
 function val = eval_cumsum(s, x, const,a)
+    sz = size(x); 
+    x = x(:); 
     val = feval(s,x, 'values') + (x-a)*const;
+    val = reshape(val, sz); 
 end
 
 

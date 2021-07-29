@@ -65,18 +65,18 @@ happy = false;
 while ~happy
     x = linspace(a, b, res+1); 
     x = x(1:end-1);
-    y = sample2coeffs(feval(r,x), 'pos'); %does an fft
+    yl = sample2coeffs(feval(r,x), 'pos'); %does an fft
     %check for resolution: (check decay on coeffs):
-    cutoff = standardChop(y, min(1e-10,tol));
-    happy = cutoff < length(y); 
+    cutoff = standardChop(yl, min(1e-10,tol));
+    happy = cutoff < length(yl); 
     if res > 20000 % max sample
         break
     end
     res = 2*res; 
 end
-%Ns = length(y)-1;
-%yy = y(1:max(cutoff, round(Ns/2))); %sometimes cutoff can be too severe, this is a bandaid for now
-yy = y(1:cutoff); 
+%Ns = length(yl)-1;
+%yy = yl(1:max(cutoff, round(Ns/2))); %sometimes cutoff can be too severe, this is a bandaid for now
+yy = yl(1:cutoff); 
 N = length(yy);  
 const = yy(1); 
 yy(1) = 0; 
@@ -138,7 +138,7 @@ s.scl = scl;
 s.tol = r.tol;
  
 
-s.res = ((N+mod(N,2))/2); 
+s.res = N-1; 
 
 end
 

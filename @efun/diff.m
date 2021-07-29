@@ -48,7 +48,8 @@ if strcmpi(type, 'handle') %wants function handle
     varargout = {h};
     return
 else                       %wants efun, rfun, or chebfun
-    S = efun( h((0:4*d)'), 0:4*d, 'coeffs', 'tol',1e-10); 
+    M = min(8000, 10*d); 
+    S = efun( h((0:M)'), 0:M, 'coeffs', 'tol',1e-10); 
 end
 S.domain = s.domain;
 

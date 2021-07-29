@@ -25,7 +25,7 @@ zer = zer(abs(zer)> 1e-6);
 zer = zer((abs(zer)<=1e10)); 
 zer = zer(~isinf(zer));
 %put in terms of x
-zer = -log(zer)/(2*pi*1i); zer = zer*(b-a); 
+zer = log(zer)/(2*pi*1i); zer = zer*(b-a); 
 
 %correct zeros so that they are on the interval [a, b]: 
 zer = a + mod(real(zer), b-a) + 1i*imag(zer); 

@@ -9,7 +9,7 @@ x = linspace(0, 1, 8000).'; x = x(1:end-1);
 r = rfun(f(x), x, 'tol', 1e-5); 
 
 tmx = [1/4,3/4].'; 
-tmn = [0, 1/2].'; 
+tmn = [1/2,1].'; 
 
 [mn, mx] = extrema(r); 
 pass(j) = max(abs(sort(mx)-tmx)) < tol; 
