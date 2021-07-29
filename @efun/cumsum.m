@@ -42,14 +42,19 @@ end
         
 %%
 % build function handle: 
-h = @(j) eval_coeff(s, j);
 d = s.res; 
+c = (imag(feval(s,1:d)))./(2*pi*(1:d)); 
+const = -2*sum(c); 
+
+h = @(j) eval_coeff(s, j, const);
+
+
 
 if strcmpi(type, 'handle') %wants function handle
     varargout = {h};
     return
 else                       %wants efun, rfun, or chebfun
-    S = efun( h((0:d)'), 0:d, 'coeffs', 'tol',1e-10); 
+    S = efun( h((-d:d)'), (-d:d).', 'coeffs', 'tol',1e-10); 
 end
 S.domain = s.domain;
 
@@ -68,12 +73,12 @@ end
 %%
 end
 
-function vals = eval_coeff(s, j)
+function vals = eval_coeff(s, j, const)
 %s is efun, j = coeffs to eval
 dom = s.domain; 
 L = dom(2)-dom(1); 
 j = j(:);  
 vals =  L*feval(s, j)./(2*pi*1i*j); 
-vals((j==0)) = 0; %fix where j = 0; 
+vals((j==0)) = const; %fix where j = 0; should be the sum of 
 end
 
