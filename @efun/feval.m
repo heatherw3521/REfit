@@ -14,7 +14,7 @@ function vals = feval(F, x, varargin)
 %%
 % See also efun/plot, efun/ift. 
  
-[s1, s2] = size(x); 
+sz = size(x); 
 x = x(:); 
 r = F.exp; 
 w = F.weights; 
@@ -80,5 +80,5 @@ if strcmpi(F.space, 'time')
     vals = real(vals + const);     
 end
 
-vals = reshape(vals, s1, s2); 
+vals = reshape(vals, sz); 
 end
