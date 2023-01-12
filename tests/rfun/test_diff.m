@@ -9,9 +9,9 @@ x = linspace(0, 1, 2*500+2).'; x = x(1:end-1);
 df = @(x) 2*pi.*cos(2*pi*x).*exp(sin(2*pi*x)); 
 df2 = @(x) -4*pi^2.*sin(2*pi*x).*exp(sin(2*pi*x)) + ...
     (2*pi.*cos(2*pi*x)).^2.*exp(sin(2*pi*x));
-
+%%
 r = rfun(f(x),x, 'tol', 1e-9); 
-dr = diff(r); 
+dr = diff_bary(r, 2); 
 pass(j) = max(abs(dr(x)-df(x))) < 2*tol; 
 j = j+1; 
 

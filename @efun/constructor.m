@@ -128,7 +128,7 @@ if ~isempty(degid)
     deg = varargin{degid+1}; 
 end
 [~, pid] = find(strcmp(varargin,'pronytype')); 
-if ~isempty(degid)
+if ~isempty(pid)
     pronytype = varargin{pid+1}; 
 end
 
@@ -296,12 +296,12 @@ end
 %%
 function [s, locs] = samples2coeffs(samples)
  N = length(samples);
+ s = 1/(length(samples(1:N)))*fft(samples(1:N), N, 1); 
+ %coeffs correspond to modes [0..(N-1)/2]
  %zero-padding can cause trouble, so we truncate if N is not the 
  %correct modality. 
  N = N - mod(N+1,2);  %N must be odd
  N = N - 2*mod((N-1)/2, 2);  %odd number of positive coeffs
- s = 1/(length(samples(1:N)))*fft(samples(1:N), N, 1); 
- %coeffs correspond to modes [0..(N-1)/2]
  s = s(1:(N-1)/2+1);
  locs = (0:(N-1)/2).';
 end

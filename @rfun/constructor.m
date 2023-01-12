@@ -52,7 +52,7 @@ switch type
                 return
             end   
             samples = samples/scl;
-            [~, pol, res, zj, fj, wj, ~, N] = pronyaaa(samples, locs, dom, tol, deg, cleanup);
+            [~, pol, res, zj, fj, wj, ~, N] = pronyaaa(samples(:), locs(:), dom, tol, deg, cleanup);
         end
 end
 %% assign properties    
