@@ -34,7 +34,7 @@ plot(r); shg
 % constant term, r is approximately a mean zero function. Stored in r are 
 % the components making up the interpolant.  
 
-[r.nodes,....     % Barycentric nodes (interpolating points)
+[r.nodes,...     % Barycentric nodes (interpolating points)
 r.vals,...      % value of interpolant at the nodes.
 r.weights]   % Barycentric weights. 
 r.const     % constant = mean(r) on [0, 1).

@@ -26,7 +26,7 @@ end
 if isempty(idx)
 	fprintf('No coneigen value is small enough, acc will be %e\n',s2(end))
     %x = v(:,end)+conj(u(:,end));
-    x = v(:, idx);
+    x = v(:, end);
 else
     %x = v(:,idx)+conj(u(:,idx));
     x = v(:, idx); 
