@@ -1,4 +1,4 @@
-function r = constructor_cheb(op, varargin)
+function r = constructor_cheb(r, op, varargin)
 % modified AAA constructor for barycentric rational
 % approximation to nonperiodic functions.
 %
@@ -23,11 +23,13 @@ switch type
             if isempty(deg)
                 deg = 100; % deg = max # iterations. 
             end
-            [~, pol, res, zj, fj, wj, err, N, const, scl] = chebAAA_auto(op, dom, tol, deg, cleanup);
+            [~, pol, res, zj, fj, wj, err, N, const, scl] = pronyaaa_auto(op, dom, tol, deg, cleanup);
             tol = err;      
     case 'samples'
-        
-            %call chebAAA: 
+        if ~isempty(poles)
+            %call pronyAAA_poles
+        else
+            %call pronyAAA: 
             if isempty(deg)
                 deg = min(100, length(samples)); % deg = max # iterations. 
             end
@@ -51,8 +53,8 @@ switch type
                 return
             end   
             samples = samples/scl;
-            [~, pol, res, zj, fj, wj, ~, N] = chebAAA(samples(:), locs(:), dom, tol, deg, cleanup);
-        
+            [~, pol, res, zj, fj, wj, ~, N] = pronyaaa(samples(:), locs(:), dom, tol, deg, cleanup);
+        end
 end
 %% assign properties    
 r.poles = pol; 
