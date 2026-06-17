@@ -14,7 +14,7 @@ chop_on = 1;
 
 %TO DO: deal with 'degree'/'length' option.
 % For now, throw error. 
-if ~isempty(deg)
+if ~isempty(deg) && ~any(strcmp(varargin, 'parameters'))
     error('efun:constructor: the construction of fixed-length exponential sums is not yet available.')
 end
 
